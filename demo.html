@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>Demo for project</title>
+  <script>
+    const formatNum = (num, str) => {
+    
+    if( str === 'USA' ) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1,');
+    }
+    
+    if( str === 'UK' ) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1 ');
+    }
+        
+    if( str === 'RANDOM' ) {
+        return num.toString().replace(/(\d)(?=(\d{3})+(?!\d))/g, '$1-');
+    }
+    
+};
+/*
+此处为非流程代码说明：
+运行formatNum函数的时候，
+此函数根据所提供的数字-语言信息，
+生成对应格式的数字，
+生成的数字内容不变，
+只有格式发生变化。
+*/
+  </script>
+  <style>
+      p {
+          font-size: 4em;
+          color: green;
+      }
+      .p2 {
+          color: red;
+          font-weight: bold;
+      }
+  </style>
+</head>
+<body>
+    <h1>
+    点击选项 显示不同格式
+    </h1>
+    
+    <ul>
+    <li id="li1">美式 显示</li>
+    <li id="li2">英式 显示</li>
+    <li id="li3">random 显示</li>
+    </ul>
+    
+    <p id="number" class="p1">
+    2768941
+    </p>
+    
+    <p id="toShow" class="p2"></p>
+<script>
+    
+const lists = document.querySelector( 'ul' );
+const para = document.getElementById( 'number' );
+
+
+lists.onclick = ev => {
+if( ev.target === document.querySelector('#li1') ) {
+        let num = para.textContent;
+        document.getElementById('toShow').textContent = formatNum(num, 'USA');
+        localStorage.abitdaLanguage = 'USA';
+    }
+    
+if( ev.target === document.querySelector('#li3') ) {
+        let num = para.textContent;
+        document.getElementById('toShow').textContent = formatNum(num, 'RANDOM');
+        localStorage.setItem('abitdaLanguage', 'RANDOM');
+        
+    }
+    
+    if( ev.target === document.querySelector('#li2') ) {
+        let num = para.textContent;
+        document.getElementById('toShow').textContent = formatNum(num, 'UK');
+        localStorage.abitdaLanguage = 'UK';
+    }
+}
+/*
+01 第一步
+JS查看对应abitdaLanguage，浏览器有没有存储一些信息。
+
+(第一次登陆，肯定没有信息的)
+没有信息，lan变量值为 USA
+( 功能其实 就是 默认设置 格式为美国标准。 )
+
+
+*/
+
+let lan = localStorage.getItem('abitdaLanguage') || 'USA';
+
+if( lan === 'UK' ) {
+    document.getElementById('li2').click();
+}
+    
+if( lan === 'USA' ) {
+    document.getElementById('li1').click();
+}
+    
+if( lan === 'RANDOM' ) {
+    document.getElementById('li3').click();
+}
+
+</script>
+    
+    
+</body>
+</html>
